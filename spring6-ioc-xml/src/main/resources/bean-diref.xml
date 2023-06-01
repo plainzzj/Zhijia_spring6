@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xml文件的约束：标签与属性-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+
+       xmlns:p="http://www.springframework.org/schema/p"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd">
+<!--    p 命名空间注入！-->
+    <bean id="studentp" class="com.atguigu.spring6.iocxml.dimap.Student"
+          p:sid="100" p:sname="mary" p:lessonList-ref="lessonList" p:teacherMap-ref="teacherMap">
+    </bean>
+
+<!--    1. 创建三个对象-->
+<!--    2. 注入普通类型属性-->
+<!--    3. 使用标签util: 类型 定义-->
+<!--    4. 在学生bean中引入util bean，完成list、map类型属性注入-->
+    <bean id="lesson1" class="com.atguigu.spring6.iocxml.dimap.Lesson">
+        <property name="lessonName" value="Java"></property>
+    </bean>
+    <bean id="lesson2" class="com.atguigu.spring6.iocxml.dimap.Lesson">
+        <property name="lessonName" value="Python"></property>
+    </bean>
+    <bean id="teacher1" class="com.atguigu.spring6.iocxml.dimap.Teacher">
+        <property name="teacherID" value="100"></property>
+        <property name="teacherName" value="西门"></property>
+    </bean>
+    <bean id="teacher2" class="com.atguigu.spring6.iocxml.dimap.Teacher">
+        <property name="teacherID" value="200"></property>
+        <property name="teacherName" value="吹雪"></property>
+    </bean>
+    <bean id="student" class="com.atguigu.spring6.iocxml.dimap.Student">
+    <property name="sid" value="2000"></property>
+    <property name="sname" value="张三"></property>
+    <property name="lessonList" ref="lessonList"></property>
+    <property name="teacherMap" ref="teacherMap"></property>
+    </bean>
+<!--        list Map类型的属性-->
+<!--        util 标签必须引入相应的命名空间-->
+        <util:list id="lessonList">
+            <ref bean="lesson1"></ref>
+            <ref bean="lesson2"></ref>
+        </util:list>
+        <util:map id="teacherMap">
+            <entry>
+                <key>
+                    <value>10010</value>
+                </key>
+                <ref bean="teacher1"></ref>
+            </entry>
+            <entry>
+                <key>
+                    <value>10086</value>
+                </key>
+                <ref bean="teacher2"></ref>
+            </entry>
+        </util:map>
+</beans>
